@@ -11,3 +11,7 @@ type Prize struct {
 	TotalTickets     int
 	UnclaimedTickets int
 }
+
+func ParseLotteryGames(bytes []byte) (games []LottoGame, err error) {
+	return
+}
