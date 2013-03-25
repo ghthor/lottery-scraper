@@ -102,3 +102,29 @@ func TestDataParser(t *testing.T) {
 		}
 	}
 }
+
+func TestOddsCalculation(t *testing.T) {
+	bytes, err := ioutil.ReadFile("scratcher.txt")
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	games, err := ParseLotteryGames(bytes)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	expectedOdds := []string{
+		"1 in 1.67",
+		"Not Possible",
+		"1 in 99.80",
+	}
+
+	for i, game := range games {
+		if game.OddsOfWinning(1000).String() != expectedOdds[i] {
+			t.Fail()
+		}
+	}
+}

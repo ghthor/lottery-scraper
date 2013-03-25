@@ -84,3 +84,26 @@ func ParseLotteryGame(b *bytes.Buffer) (game LottoGame, err error) {
 
 	return game, nil
 }
+
+type Odds struct {
+	Unclaimed, Profitable int
+}
+
+func (o Odds) String() string {
+	if o.Profitable == 0 {
+		return "Not Possible"
+	}
+
+	odds := float64(o.Unclaimed) / float64(o.Profitable)
+	return fmt.Sprintf("1 in %.2f", odds)
+}
+
+func (g LottoGame) OddsOfWinning(profit int) (odds Odds) {
+	for _, prize := range g.Prizes {
+		odds.Unclaimed += prize.UnclaimedTickets
+		if prize.Value-g.Cost > profit {
+			odds.Profitable += prize.UnclaimedTickets
+		}
+	}
+	return
+}
