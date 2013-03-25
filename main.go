@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
 )
 
@@ -46,9 +45,9 @@ func main() {
 		profit = flag_profit
 	}
 
+	// Retrieve the parsed games
 	games := <-gamesCh
 
-	for _, game := range games {
-		fmt.Println(game.OddsOfWinning(profit))
-	}
+	// Output the odds to stdout
+	outputOdds(games, profit)
 }
