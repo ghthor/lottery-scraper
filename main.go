@@ -2,7 +2,9 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 var flag_profit int
@@ -39,8 +41,15 @@ func main() {
 	var profit int
 	if flag_profit == -1 {
 		// Profit parameter wasn't passed on the commandline
-		// TODO: Ask the user for the profit using stdin
-		panic("invalid profit")
+		// Prompt the user for the profit using stdin
+		fmt.Println("Please input your required profit value in dollars and [Press Enter]")
+		fmt.Print(">>> $")
+
+		n, err := fmt.Scan(&profit)
+		if n != 1 && err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
 	} else {
 		profit = flag_profit
 	}
